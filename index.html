@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szalone Popupy Mobilne</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    background: #111;
+  }
+
+  .popup-img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<audio id="retro-sound" loop>
+  <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+</audio>
+
+<script>
+  const body = document.body;
+  const sound = document.getElementById('retro-sound');
+  sound.play().catch(() => {}); // automatyczne odtwarzanie może wymagać interakcji użytkownika na telefonie
+
+  function randomPosition() {
+    const x = Math.random() * window.innerWidth - 50;
+    const y = Math.random() * window.innerHeight - 50;
+    return {x, y};
+  }
+
+  function createPopup() {
+    const img = document.createElement('img');
+    img.src = 'https://i.imgur.com/6b7q5vC.png'; // przykładowy obrazek, możesz zmienić
+    img.classList.add('popup-img');
+
+    const pos = randomPosition();
+    img.style.left = pos.x + 'px';
+    img.style.top = pos.y + 'px';
+
+    body.appendChild(img);
+
+    setTimeout(() => {
+      img.style.transform = 'scale(1.5) rotate(20deg)';
+    }, 100);
+
+    setTimeout(() => {
+      body.removeChild(img);
+    }, 2000);
+  }
+
+  // co 1 sekundę wyskakuje nowy popup
+  setInterval(createPopup, 1000);
+</script>
+
+</body>
+</html>
